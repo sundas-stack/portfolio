@@ -41,13 +41,13 @@ export const services = [
   },
   {
     title: 'AI & Automation',
-    text: 'LLM and OCR pipelines and ML models that do real, everyday work.',
-    tools: 'Python · LLMs · OCR · TensorFlow · PyTorch',
+    text: 'RAG apps, tool-using agents and OCR pipelines that do real, everyday work.',
+    tools: 'Python · LLMs · RAG · AI agents · MCP · OCR · TensorFlow',
   },
   {
     title: 'Backend & DevOps',
     text: 'APIs, databases and containers, tested and shipped through CI/CD.',
-    tools: 'Flask · REST · PostgreSQL · Docker · pytest',
+    tools: 'FastAPI · Flask · PostgreSQL · pgvector · Docker · GitHub Actions',
   },
 ];
 
@@ -134,5 +134,6 @@ export const awards = [
 export const about = [
   "I'm a Software Engineering graduate from Air University. I started in UX and graphic design, so I care about how a product looks and feels as much as how it works, and today I build across web, mobile and AI.",
   'At Sky Premia LLC, a US company, I worked remotely full-time and shipped two React Native apps, a Python receipt automation using OCR and LLMs, and the company website, working alongside back-end engineers and presenting to clients.',
+  'I also built JobFit AI, a RAG and agent application with an MCP server, packaged with Docker and shipped through a GitHub Actions pipeline.',
   'Outside code I have led AU Women in Computing and debate competitively, winning gold medals at university and national level.',
 ];

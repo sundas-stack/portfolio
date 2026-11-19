@@ -17,6 +17,96 @@ export const categories = [
 
 export const projects = [
   {
+    slug: 'jobfit-ai',
+    code: 'AI-01',
+    title: 'JobFit AI',
+    org: 'Personal project · 2026',
+    categories: ['ai', 'backend', 'web'],
+    summary:
+      'A RAG and agent app that scores how well a resume fits a job, quotes the proof from the resume, checks ATS readiness and coaches the candidate on the gaps.',
+    tags: ['Python', 'FastAPI', 'RAG', 'pgvector', 'AI agents', 'MCP', 'React', 'Docker', 'GitHub Actions'],
+    github: 'https://github.com/sundas-stack/jobfit-ai',
+    cover: { type: 'browser', image: '/images/jf-report.jpg', alt: 'JobFit AI fit report with score and requirements' },
+    caseStudy: {
+      intro:
+        'An AI application that reads a resume and a job ad, finds evidence for every requirement with vector search, gives an honest fit score and tells the candidate exactly what to fix.',
+      meta: [
+        ['Role', 'Solo: AI, backend and frontend engineer'],
+        ['Stack', 'Python, FastAPI, PostgreSQL + pgvector, React'],
+        ['AI', 'Groq LLM, tool-calling agent, local embeddings, OCR'],
+        ['DevOps', 'Docker Compose, GitHub Actions CI/CD'],
+      ],
+      links: [['README & architecture', 'https://github.com/sundas-stack/jobfit-ai#readme']],
+      sections: [
+        {
+          label: 'The problem',
+          paragraphs: [
+            'Job seekers send the same resume to every job and never learn why they were filtered out. Online "ATS checkers" give a number, but not the reason behind it or any proof.',
+            'I wanted a tool that explains itself: for every requirement in the job ad, show the exact line in the resume that proves it, or say clearly that it is missing.',
+          ],
+        },
+        {
+          label: 'What I built',
+          paragraphs: [
+            'A full RAG application. Resumes and job ads (PDF, Word, photos or scanned files) are read, split into labelled chunks, embedded and stored in PostgreSQL with pgvector. An LLM lists the job requirements, vector search finds the closest resume evidence, and a strict LLM judge marks each one matched, partly or missing, quoting the resume.',
+            'On top of that I built an agent mode, where the model chooses its own tools and every step streams live to the UI, and an MCP server so assistants like Claude can use JobFit as a tool.',
+          ],
+        },
+        {
+          label: 'How a report is made',
+          bullets: [
+            ['Requirements:', 'the LLM turns the job ad into a checklist of 8–15 requirements, each linked to the line it came from.'],
+            ['Retrieval:', 'pgvector finds the three closest resume chunks for every requirement.'],
+            ['Judge:', 'a strict LLM prompt decides matched, partly or missing and must quote the resume. A skill only listed under "Skills" counts as partly.'],
+            ['Score:', 'computed in plain Python, not by the LLM: 65% requirement match plus 35% ATS readiness, so the same input always gives the same score.'],
+            ['Coach:', 'sharper resume lines, likely interview questions and next steps, without inventing experience.'],
+          ],
+        },
+        {
+          label: 'Key features',
+          bullets: [
+            ['Proof for every point,', 'highlighted quotes from the resume with chunk labels like R3.'],
+            ['ATS readiness checks', 'for exact keywords, standard sections, results with numbers, action verbs and length.'],
+            ['Agent mode', 'with five tools (search resume, search job, compare skills, rewrite a line, interview questions) and live step streaming.'],
+            ['MCP server', 'exposing the same capabilities to Claude Desktop and other AI assistants.'],
+            ['Any file,', 'including scanned PDFs and phone photos, read with Tesseract OCR.'],
+          ],
+        },
+      ],
+      gallery: {
+        type: 'browser',
+        shots: [
+          ['/images/jf-report.jpg', 'Fit report: every requirement with proof, and the score split into requirement match and ATS readiness'],
+          ['/images/jf-ats.jpg', 'ATS readiness: five rule-based checks, each with a concrete tip'],
+          ['/images/jf-agent.jpg', 'Agent mode: tool steps stream live, answers cite their sources'],
+          ['/images/jf-new.jpg', 'Check a job: PDF, Word, photo or scanned file'],
+          ['/images/jf-home.jpg', 'First screen: one click to try it with a sample resume'],
+          ['/images/jf-library.jpg', 'Library: each document split into labelled chunks the AI can quote'],
+        ],
+      },
+      after: [
+        {
+          label: 'Engineering decisions',
+          bullets: [
+            ['Score in code, not in the model,', 'so it is explainable and stable.'],
+            ['Validated citations:', 'a chunk label the model returns is kept only if it really exists.'],
+            ['Model-agnostic:', 'any OpenAI-compatible API works. When Groq retired Llama 3.3, switching to GPT-OSS 120B was a one-line config change.'],
+            ['Tested AI quality:', '29 automated tests plus an evaluation set that fails CI if requirement recall or accuracy drops.'],
+          ],
+        },
+        {
+          label: 'Docker & CI/CD',
+          paragraphs: [
+            'One command, docker compose up, starts four containers: the React app behind nginx, the FastAPI backend, the MCP server and PostgreSQL with pgvector. The embedding model is baked into the image so it runs without downloads.',
+            'Every push runs GitHub Actions: lint, tests against a real pgvector database, the AI evaluation, then builds and publishes the Docker images to GitHub Container Registry.',
+          ],
+        },
+      ],
+      note: 'Screens show sample data for a fictional candidate.',
+    },
+  },
+
+  {
     slug: 'sky-premia-website',
     code: 'WEB-01',
     title: 'Sky Premia Website',
@@ -215,7 +305,7 @@ export const projects = [
 
   {
     slug: 'receipt-automation',
-    code: 'AI-01',
+    code: 'AI-02',
     title: 'Receipt Processing Automation',
     org: 'Sky Premia LLC · USA',
     categories: ['ai', 'backend'],
